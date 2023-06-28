@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import sqlite3
+import data
 
 app = Flask(__name__)
 CORS(app)
@@ -74,6 +75,22 @@ def delete_blog(id):
     close_db_connection(conn)
     return jsonify({'message': 'Blog deleted successfully'}), 200
 
+@app.route('/rc', methods=['POST'])
+def random_create_blog():
+    # data = request.get_json()
+    # author = data.get('author')
+    # blog = data.get('blog')
+    # title = data.get('title')
+    
+    # conn = get_db_connection()
+    # cursor = conn.cursor()
+    # cursor.execute('INSERT INTO blogs (author, blog, title) VALUES (?, ?, ?)', (author, blog, title))
+    # conn.commit()
+    # close_db_connection(conn)
+    data.random_create()
+    return jsonify({'message': 'Random BLOG created successfully'}), 201
+
+
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    app.run(debug=True)

@@ -3,6 +3,9 @@ from faker import Faker
 # Connect to the SQLite database
 conn = sqlite3.connect('blog.db')
 
+# delete all table we created
+tables = list(conn.execute("select name from sqlite_master where type is 'table'"))
+conn.executescript(';'.join(["drop table if exists %s" %i for i in tables]))
 # Create a cursor object to execute SQL commands
 cursor = conn.cursor()
 
@@ -23,22 +26,24 @@ cursor.execute(create_table_query)
 conn.commit()
 conn.close()
 
-fake = Faker()
+def random_create():
+    fake = Faker()
+    # Connect to the SQLite database
+    conn = sqlite3.connect('blog.db')
 
-# Connect to the SQLite database
-conn = sqlite3.connect('blog.db')
+    # Create a cursor object to execute SQL commands
+    cursor = conn.cursor()
 
-# Create a cursor object to execute SQL commands
-cursor = conn.cursor()
+    # Generate and insert fake data into the blogs table
+    for _ in range(2):
+        author = fake.name()
+        blog = fake.paragraph()
+        title = fake.sentence()
+        
+        cursor.execute("INSERT INTO blogs (author, blog, title) VALUES (?, ?, ?)", (author, blog, title))
 
-# Generate and insert fake data into the blogs table
-for _ in range(10):
-    author = fake.name()
-    blog = fake.paragraph()
-    title = fake.sentence()
-    
-    cursor.execute("INSERT INTO blogs (author, blog, title) VALUES (?, ?, ?)", (author, blog, title))
+    # Commit the changes and close the connection
+    conn.commit()
+    conn.close()
 
-# Commit the changes and close the connection
-conn.commit()
-conn.close()
+random_create()

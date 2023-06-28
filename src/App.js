@@ -6,6 +6,8 @@ import Create from "./Create";
 import BlogDetails from "./BlogDetails";
 import NotFound from "./NotFound";
 import Thing from "./Thing";
+import RandomCreate from "./RandonCreate";
+
 
 function App() {
 
@@ -22,7 +24,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/create" element={<Create />} />
             <Route path="/blogs/:id" element={<BlogDetails />} />
-            <Route path="/abc" element={<Thing />} />
+            <Route path="/rc" element={<RandomCreate />} />
           </Routes>
         </div>
       </div>
