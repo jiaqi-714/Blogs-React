@@ -1,5 +1,7 @@
 import sqlite3
 from faker import Faker
+import random
+
 # Connect to the SQLite database
 conn = sqlite3.connect('blog.db')
 
@@ -35,7 +37,7 @@ def random_create():
     cursor = conn.cursor()
 
     # Generate and insert fake data into the blogs table
-    for _ in range(2):
+    for _ in range(1):
         author = fake.name()
         blog = fake.paragraph()
         title = fake.sentence()
@@ -47,3 +49,34 @@ def random_create():
     conn.close()
 
 random_create()
+random_create()
+random_create()
+random_create()
+random_create()
+
+def delete_random_blog_entry():
+    # Connect to the database
+    conn = sqlite3.connect('blog.db')
+    cursor = conn.cursor()
+
+    # Get the total number of rows in the table
+    cursor.execute("SELECT COUNT(*) FROM blogs")
+    total_rows = cursor.fetchone()[0]
+
+    # Generate a random row index
+    random_row_index = random.randint(1, total_rows)
+
+    # Execute the DELETE statement for the randomly selected row
+    delete_query = '''
+        DELETE FROM blogs
+        WHERE id = (
+            SELECT id FROM blogs
+            LIMIT 1 OFFSET ?
+        )
+    '''
+    cursor.execute(delete_query, (random_row_index,))
+
+    # Commit the changes and close the connection
+    conn.commit()
+    conn.close()
+
