@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 
-const useFetch = (url) => {
+const useFetch = (url, activeIndex) => {
     const [isPending, setPengding] = useState(true);
     const [data, setData] = useState(null)
     const [error, setError] = useState(null)
-
     useEffect(() => {
         fetch(url)
         .then((res) => {
@@ -19,12 +18,13 @@ const useFetch = (url) => {
             setData(data);
             setPengding(false);
             setError(null);
+            
         })
         .catch(err => {
             setError(err.message)
             setPengding(false)
         })
-    }, [url])
+    }, [url, activeIndex])
 
     return ({isPending, data, error});
 }

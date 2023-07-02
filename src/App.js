@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from './Navbar';
 import Home from './Home';
@@ -6,25 +7,29 @@ import Create from "./Create";
 import BlogDetails from "./BlogDetails";
 import NotFound from "./NotFound";
 import Thing from "./Thing";
-import RandomCreate from "./RandonCreate";
+import RondomCreate from "./RondomCreate";
+import PaginationPage from "./PaginationPage";
 
 
 function App() {
+  const [activeIndex, setActiveIndex] = useState(false);
 
-  const thing = {
+  const handleSetActiveIndex = (index) => {
+    setActiveIndex(index);
+  };
 
-  }
   return ( 
     <Router> {/* Add the Router component as the parent */}
       <div className="App">
         <Navbar />
+        <RondomCreate activeIndex={activeIndex} setActiveIndex={setActiveIndex}/>
         <div className="content">
           <Routes>
             <Route path="*" element={<NotFound />} />
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home activeIndex={activeIndex} setActiveIndex={setActiveIndex}/>} />
             <Route path="/create" element={<Create />} />
             <Route path="/blogs/:id" element={<BlogDetails />} />
-            <Route path="/rc" element={<RandomCreate />} />
+            <Route path="/page" element={<PaginationPage />} />
           </Routes>
         </div>
       </div>

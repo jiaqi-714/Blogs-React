@@ -1,13 +1,15 @@
 import sqlite3
 from faker import Faker
 import random
+from datetime import datetime
 
 # Connect to the SQLite database
 conn = sqlite3.connect('blog.db')
 
-# delete all table we created
-tables = list(conn.execute("select name from sqlite_master where type is 'table'"))
-conn.executescript(';'.join(["drop table if exists %s" %i for i in tables]))
+# Delete all tables we created
+tables = list(conn.execute("SELECT name FROM sqlite_master WHERE type is 'table'"))
+conn.executescript(';'.join(["DROP TABLE IF EXISTS %s" % i for i in tables]))
+
 # Create a cursor object to execute SQL commands
 cursor = conn.cursor()
 
@@ -17,7 +19,8 @@ create_table_query = '''
         id INTEGER PRIMARY KEY,
         author TEXT,
         blog TEXT,
-        title TEXT
+        title TEXT,
+        post_date TEXT
     )
 '''
 
@@ -27,6 +30,7 @@ cursor.execute(create_table_query)
 # Commit the changes and close the connection
 conn.commit()
 conn.close()
+
 
 def random_create():
     fake = Faker()
@@ -41,18 +45,15 @@ def random_create():
         author = fake.name()
         blog = fake.paragraph()
         title = fake.sentence()
-        
-        cursor.execute("INSERT INTO blogs (author, blog, title) VALUES (?, ?, ?)", (author, blog, title))
+        post_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        cursor.execute("INSERT INTO blogs (author, blog, title, post_date) VALUES (?, ?, ?, ?)",
+                       (author, blog, title, post_date))
 
     # Commit the changes and close the connection
     conn.commit()
     conn.close()
 
-random_create()
-random_create()
-random_create()
-random_create()
-random_create()
 
 def delete_random_blog_entry():
     # Connect to the database
@@ -64,7 +65,9 @@ def delete_random_blog_entry():
     total_rows = cursor.fetchone()[0]
 
     # Generate a random row index
-    random_row_index = random.randint(1, total_rows)
+    random_row_index = random.randint(0, total_rows)
+    random_row_index = random_row_index - 1
+    print("------------delete " + str(random_row_index))
 
     # Execute the DELETE statement for the randomly selected row
     delete_query = '''
@@ -79,4 +82,6 @@ def delete_random_blog_entry():
     # Commit the changes and close the connection
     conn.commit()
     conn.close()
+
+
 

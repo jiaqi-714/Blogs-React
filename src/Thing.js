@@ -1,7 +1,8 @@
-const Thing = () => {
+const Thing = ({ isActive }) => {
+    console.log(isActive)
     return ( 
         <div>
-            <h4>HELLOWWWW</h4>
+            <h4>{isActive}</h4>
         </div>
     );
 }

@@ -17,33 +17,11 @@ const PaginationPage = () => {
         setCurrentPage((prevPage) => prevPage + 1);
     };
 
-    useEffect(() => {
-        if (blogs && blogs.length === 0 && currentPage > 1) {
-            setCurrentPage(1);
-        }
-        if (blogs !== null) {
-            if (blogs.length === 0) {
-                setEmptyBlog(true)
-            }
-            else{
-                setEmptyBlog(false)
-            }
-        }
-    }, [blogs, currentPage]);
-
-    const templateBlog = [{
-        id: 9999,
-        author: 'Hello',
-        title: 'Hello ',
-        content: 'Hello',
-    }];
-
-
     return (
         <div >
             {error && <div>{error}</div>}
             {isPending && <div>loading... ...</div>}
-            {(blogs && !emptyBlog)&& <BlogList blogs = {blogs.blogs} title = "All blogs"></BlogList>}
+            {blogs&& <BlogList blogs = {blogs.blogs} title = "All blogs"></BlogList>}
 
             <button onClick={handlePrevPage} disabled={currentPage === 1}>
                 Previous Page

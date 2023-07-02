@@ -31,10 +31,11 @@ def create_blog():
     author = data.get('author')
     blog = data.get('blog')
     title = data.get('title')
+    post_date = data.get('post_date')
     
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO blogs (author, blog, title) VALUES (?, ?, ?)', (author, blog, title))
+    cursor.execute('INSERT INTO blogs (author, blog, title, post_date) VALUES (?, ?, ?, ?)', (author, blog, title, post_date))
     conn.commit()
     close_db_connection(conn)
     return jsonify({'message': 'Blog created successfully'}), 201

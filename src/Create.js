@@ -6,24 +6,32 @@ const Create = () => {
     const [body, setBody] = useState("Write Blog here")
     const [author, setAuthor] = useState("Erika")
     const [isPending, setPending] = useState(false)
-    const naviagte = useNavigate()
+    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const blog = { title, body, author };
-
-        setPending(true)
+        const now = new Date();
+        const formattedDate = now.toISOString().slice(0, 19).replace("T", " ");
+        const blog = {
+            title,
+            body,
+            author,
+            post_date: formattedDate,
+        };
+        console.log(blog)
+        setPending(true);
         fetch("http://localhost:5000/blogs", {
-            method: 'POST',
-            headers: { "Content-Type": "application/json"},
-            body: JSON.stringify(blog)
-        }).then(() => {
-            console.log("New Blog Added");
-            setPending(false)
-            naviagte("/")
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(blog),
         })
-    }
-
+          .then(() => {
+            console.log("New Blog Added");
+            setPending(false);
+            navigate("/");
+          });
+      };
+      
     return (
         <div className="create">
             <h2>Add a New Blog</h2>
