@@ -6,8 +6,6 @@ import Home from './conponent/Home';
 import Create from "./conponent/Create";
 import BlogDetails from "./conponent/BlogDetails";
 import NotFound from "./conponent/NotFound";
-import Thing from "./conponent/Thing";
-import RondomCreate from "./conponent/RondomCreate";
 import PaginationPage from "./conponent/PaginationPage";
 
 

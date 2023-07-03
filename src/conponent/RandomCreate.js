@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const RondomCreate = ({ activeIndex, setActiveIndex }) => {
+const RandomCreate = ({ activeIndex, setActiveIndex }) => {
     const [isPending, setPending] = useState(false)
     const naviagte = useNavigate()
     const paginationVariants = {
@@ -45,4 +45,4 @@ const RondomCreate = ({ activeIndex, setActiveIndex }) => {
     );
 }
  
-export default RondomCreate;
+export default RandomCreate;
