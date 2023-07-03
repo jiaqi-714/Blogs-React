@@ -4,6 +4,11 @@ import { useNavigate } from "react-router-dom";
 const RondomCreate = ({ activeIndex, setActiveIndex }) => {
     const [isPending, setPending] = useState(false)
     const naviagte = useNavigate()
+    const paginationVariants = {
+        hidden: { opacity: 0, y: 10 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+    };
+
 
     const handleClickCreate = () => {
         setPending(true)
@@ -33,7 +38,7 @@ const RondomCreate = ({ activeIndex, setActiveIndex }) => {
     }
 
     return ( 
-        <div className="create">
+        <div className="button-container">
             <button onClick={() => handleClickCreate()}>Create One Random Blog</button>
             <button onClick={() => handleClickDelete()}>Delete One Random Blog</button>
         </div>

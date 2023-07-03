@@ -41,7 +41,7 @@ def random_create():
     cursor = conn.cursor()
 
     # Generate and insert fake data into the blogs table
-    for _ in range(1):
+    for _ in range(2):
         author = fake.name()
         blog = fake.paragraph()
         title = fake.sentence()
